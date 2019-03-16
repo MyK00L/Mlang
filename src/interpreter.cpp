@@ -23,6 +23,14 @@ inline int get64(const string& s, int& i){
 
 int * vars[N_BLOCKS];
 int   blockn;
+
+
+inline void exit(){
+    for(int i=0; i<blockn; ++i){
+		free(vars[i]);
+    }
+}
+
 inline int& var(int id){
     while(blockn*BLOCK_SIZE<id){
         vars[blockn++] = (int *)malloc(BLOCK_SIZE*sizeof(int));
@@ -39,12 +47,6 @@ inline int& var(int id){
 inline void init(){
     blockn = 1;
     vars[0] = (int *)malloc(BLOCK_SIZE*sizeof(int));
-}
-
-inline void exit(){
-    for(int i=0; i<blockn; ++i){
-	free(vars[i]);
-    }
 }
 
 inline void readProgram(vector<string>& v, const string& filename){
